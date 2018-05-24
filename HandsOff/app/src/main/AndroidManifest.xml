@@ -2,7 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="handsoff.handsoff">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+
+
 
     <application
         android:allowBackup="true"
@@ -19,11 +26,16 @@
             </intent-filter>
         </activity>
         <service android:name=".HandsOffService" />
-        <receiver android:name="InterceptCall">
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE"/>
+        <receiver  android:name=".InterceptCall">
+            <intent-filter  android:priority="100" >
+                <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
+        <!--<receiver android:name="InterceptCall">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.PHONE_STATE"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>
