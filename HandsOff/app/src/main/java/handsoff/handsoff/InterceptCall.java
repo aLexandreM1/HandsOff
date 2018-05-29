@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.annotation.RequiresApi;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -22,9 +24,10 @@ public class InterceptCall extends BroadcastReceiver {
     private static final String TAG = null;
     String incommingNumber;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public static String getContactName(Context context, String phoneNumber) {
         ContentResolver cr = context.getContentResolver();
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+        Uri uri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Contactables.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
         Cursor cursor = cr.query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
         if (cursor == null) {
             return null;
@@ -33,11 +36,9 @@ public class InterceptCall extends BroadcastReceiver {
         if(cursor.moveToFirst()) {
             contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
         }
-
         if(cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
-
         return contactName;
     }
 
@@ -68,7 +69,7 @@ public class InterceptCall extends BroadcastReceiver {
             telephonyService.silenceRinger();
             telephonyService.endCall();
             Log.v(TAG,"BYE BYE BYE" );
-            System.out.println("REJEITANDO A LIGACAO ********************************************* ");
+//            System.out.println("REJEITANDO A LIGACAO ********************************************* ");
             //Toast.makeText(context, "NAO ATENDER", Toast.LENGTH_SHORT).show();
 
 
@@ -78,12 +79,14 @@ public class InterceptCall extends BroadcastReceiver {
             //**************Pega numero de quem esta ligando*****************************
 
             tm.listen(new PhoneStateListener(){
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
                 @Override
                 public void onCallStateChanged(int state, String incomingNumber) {
                     super.onCallStateChanged(state, incomingNumber);
-                    String contactName = getContactName(context, incomingNumber);
+                    String contactName = getContactName(context,incomingNumber);
                     Toast.makeText(context, contactName+" Está te ligando.", Toast.LENGTH_SHORT).show();
-                    //System.out.println("incomingNumber : "+incomingNumber);
+                    //System.out.println("incomingNumber : "+incomingNumber;
+
                 }
             },PhoneStateListener.LISTEN_CALL_STATE);
             //***************************************************************************
@@ -92,4 +95,5 @@ public class InterceptCall extends BroadcastReceiver {
             e.printStackTrace();
         }
     }
+
 }
