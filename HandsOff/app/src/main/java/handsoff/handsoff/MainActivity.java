@@ -12,7 +12,7 @@ import android.widget.Toast;
 //VER O PORQUE ELE ESTA DANDO QUE UMA PERMISSAO NAO SEI ACEITA!!!!
 public class MainActivity extends AppCompatActivity {
     String[] PERMISSIONS = {Manifest.permission.MODIFY_PHONE_STATE, Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS};
+            Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

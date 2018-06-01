@@ -13,6 +13,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.telephony.gsm.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -69,11 +70,12 @@ public class InterceptCall extends BroadcastReceiver {
             telephonyService.silenceRinger();
             telephonyService.endCall();
             Log.v(TAG,"BYE BYE BYE" );
-//            System.out.println("REJEITANDO A LIGACAO ********************************************* ");
             //Toast.makeText(context, "NAO ATENDER", Toast.LENGTH_SHORT).show();
 
+            //*********************** Mandar mensagem após endCall *******************************
 
-            //*****************************************************************************
+
+
 
 
             //**************Pega numero de quem esta ligando*****************************
@@ -84,8 +86,12 @@ public class InterceptCall extends BroadcastReceiver {
                 public void onCallStateChanged(int state, String incomingNumber) {
                     super.onCallStateChanged(state, incomingNumber);
                     String contactName = getContactName(context,incomingNumber);
-                    Toast.makeText(context, contactName+" Está te ligando.", Toast.LENGTH_SHORT).show();
-                    //System.out.println("incomingNumber : "+incomingNumber;
+                    if (contactName == null){
+                        Toast.makeText(context, incomingNumber+" Está te ligando.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(context, contactName+" Está te ligando.", Toast.LENGTH_SHORT).show();
+                    }
+                    //System.out.println("incomingNumber : "+incomingNumber);
 
                 }
             },PhoneStateListener.LISTEN_CALL_STATE);
@@ -94,6 +100,14 @@ public class InterceptCall extends BroadcastReceiver {
         } catch (Exception e){
             e.printStackTrace();
         }
+
+        String smsNumber = incommingNumber;
+        String smsText = "LAPA VIADO";
+
+        android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
+        Log.v(TAG,"ANTES" );
+        smsManager.sendTextMessage(smsNumber, null, smsText, null, null);
+        Log.v(TAG,"DEPOIS" );
     }
 
 }
