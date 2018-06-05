@@ -1,4 +1,5 @@
 package handsoff.handsoff;
+
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
+import android.telecom.Call;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.SmsManager;
@@ -25,6 +27,8 @@ public class InterceptCall extends BroadcastReceiver {
     private static final String TAG = null;
     String incommingNumber;
 
+    public boolean flag = false;
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public static String getContactName(Context context, String phoneNumber) {
         ContentResolver cr = context.getContentResolver();
@@ -34,10 +38,10 @@ public class InterceptCall extends BroadcastReceiver {
             return null;
         }
         String contactName = null;
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
         }
-        if(cursor != null && !cursor.isClosed()) {
+        if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
         return contactName;
@@ -47,67 +51,63 @@ public class InterceptCall extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
 
-        if(null == bundle)
+
+        if (null == bundle)
             return;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-
 
 
         try {
             //************** REJEITA A LIGACAO **************************************
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            Log.v(TAG, "Get getTeleService...");
-            Class c = Class.forName(tm.getClass().getName());
-            Method m = c.getDeclaredMethod("getITelephony");
-            m.setAccessible(true);
-            com.android.internal.telephony.ITelephony telephonyService = (ITelephony) m.invoke(tm);
-            Bundle b = intent.getExtras();
-            incommingNumber = b.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
-            Log.v(TAG,incommingNumber );
+            if (tm.getCallState() == TelephonyManager.CALL_STATE_RINGING) {
+                Log.v(TAG, "Get getTeleService...");
+                Class c = Class.forName(tm.getClass().getName());
+                Method m = c.getDeclaredMethod("getITelephony");
+                m.setAccessible(true);
+                com.android.internal.telephony.ITelephony telephonyService = (ITelephony) m.invoke(tm);
+                Bundle b = intent.getExtras();
+                incommingNumber = b.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+                Log.v(TAG, incommingNumber);
 
-            telephonyService = (ITelephony) m.invoke(tm);
-            telephonyService.silenceRinger();
-            telephonyService.endCall();
-            Log.v(TAG,"BYE BYE BYE" );
-            //Toast.makeText(context, "NAO ATENDER", Toast.LENGTH_SHORT).show();
+                telephonyService = (ITelephony) m.invoke(tm);
+                telephonyService.silenceRinger();
+                telephonyService.endCall();
+                Log.v(TAG, "BYE BYE BYE");
+                //Toast.makeText(context, "NAO ATENDER", Toast.LENGTH_SHORT).show();
 
-            //*********************** Mandar mensagem após endCall *******************************
+                //*********************** Mandar mensagem após endCall *******************************
 
+                String smsNumber = incommingNumber;
+                String smsText = "LAPA VIADO";
 
+                android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
+                Log.v(TAG, "ANTES");
+                smsManager.sendTextMessage(smsNumber, null, smsText, null, null);
+                Log.v(TAG, "DEPOIS");
 
+                //**************Pega numero de quem esta ligando*****************************
 
+                tm.listen(new PhoneStateListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+                    @Override
+                    public void onCallStateChanged(int state, String incomingNumber) {
+                        super.onCallStateChanged(state, incomingNumber);
+                        String contactName = getContactName(context, incomingNumber);
+                        if (contactName == null) {
+                            Toast.makeText(context, incomingNumber + " Está te ligando.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, contactName + " Está te ligando.", Toast.LENGTH_SHORT).show();
+                        }
+                        //System.out.println("incomingNumber : "+incomingNumber);
 
-            //**************Pega numero de quem esta ligando*****************************
-
-            tm.listen(new PhoneStateListener(){
-                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-                @Override
-                public void onCallStateChanged(int state, String incomingNumber) {
-                    super.onCallStateChanged(state, incomingNumber);
-                    String contactName = getContactName(context,incomingNumber);
-                    if (contactName == null){
-                        Toast.makeText(context, incomingNumber+" Está te ligando.", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(context, contactName+" Está te ligando.", Toast.LENGTH_SHORT).show();
                     }
-                    //System.out.println("incomingNumber : "+incomingNumber);
-
-                }
-            },PhoneStateListener.LISTEN_CALL_STATE);
-            //***************************************************************************
-
-        } catch (Exception e){
+                }, PhoneStateListener.LISTEN_CALL_STATE);
+                //***************************************************************************
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        String smsNumber = incommingNumber;
-        String smsText = "LAPA VIADO";
-
-        android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
-        Log.v(TAG,"ANTES" );
-        smsManager.sendTextMessage(smsNumber, null, smsText, null, null);
-        Log.v(TAG,"DEPOIS" );
     }
 
 }
