@@ -31,6 +31,7 @@
         <receiver  android:name=".InterceptCall">
             <intent-filter  android:priority="100" >
                 <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <!--<receiver android:name="InterceptCall">-->
