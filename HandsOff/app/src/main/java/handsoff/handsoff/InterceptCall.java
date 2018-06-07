@@ -11,9 +11,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
 import android.support.annotation.RequiresApi;
 import android.telecom.Call;
 import android.telephony.PhoneStateListener;
+import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.SmsManager;
 import android.util.Log;
@@ -26,8 +28,6 @@ import java.lang.reflect.Method;
 public class InterceptCall extends BroadcastReceiver {
     private static final String TAG = null;
     String incommingNumber;
-
-    public boolean flag = false;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public static String getContactName(Context context, String phoneNumber) {
@@ -47,6 +47,7 @@ public class InterceptCall extends BroadcastReceiver {
         return contactName;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onReceive(final Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
@@ -58,6 +59,30 @@ public class InterceptCall extends BroadcastReceiver {
 
 
         try {
+            //************** RECEBENDO MENSAGEM *************************************
+
+            if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())) {
+                for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
+                    String messageBody = smsMessage.getMessageBody();
+                    String phone = smsMessage.getOriginatingAddress();
+                    String contactName = getContactName(context, phone);
+
+                    Log.v(TAG, messageBody);
+                    Log.v(TAG, contactName);
+
+                    if (contactName.equals(null)) {
+                        Toast.makeText(context, contactName + " te mandou uma mensagem.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, messageBody, Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(context, contactName + " te mandou uma mensagem.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, messageBody, Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            }
+
+            //************************ //=// ****************************************
+
             //************** REJEITA A LIGACAO **************************************
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (tm.getCallState() == TelephonyManager.CALL_STATE_RINGING) {
@@ -74,17 +99,14 @@ public class InterceptCall extends BroadcastReceiver {
                 telephonyService.silenceRinger();
                 telephonyService.endCall();
                 Log.v(TAG, "BYE BYE BYE");
-                //Toast.makeText(context, "NAO ATENDER", Toast.LENGTH_SHORT).show();
 
-                //*********************** Mandar mensagem após endCall *******************************
+                //**************** Mandar mensagem após o fim da ligação ********************
 
                 String smsNumber = incommingNumber;
-                String smsText = "LAPA VIADO";
+                String smsText = "Estou ocupado no momento, poderia ligar mais tarde por favor. Obrigado!";
 
                 android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
-                Log.v(TAG, "ANTES");
                 smsManager.sendTextMessage(smsNumber, null, smsText, null, null);
-                Log.v(TAG, "DEPOIS");
 
                 //**************Pega numero de quem esta ligando*****************************
 
