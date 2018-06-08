@@ -1,16 +1,21 @@
 package handsoff.handsoff;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
+
+import java.util.Locale;
+
 //VER O PORQUE ELE ESTA DANDO QUE UMA PERMISSAO NAO SEI ACEITA!!!!
 public class MainActivity extends AppCompatActivity {
+
     String[] PERMISSIONS = {Manifest.permission.MODIFY_PHONE_STATE, Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS};
 
@@ -31,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

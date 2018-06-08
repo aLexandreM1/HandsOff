@@ -13,21 +13,19 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.support.annotation.RequiresApi;
-import android.telecom.Call;
 import android.telephony.PhoneStateListener;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
-import android.telephony.gsm.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.android.internal.telephony.ITelephony;
-
 import java.lang.reflect.Method;
 
 public class InterceptCall extends BroadcastReceiver {
     private static final String TAG = null;
     String incommingNumber;
+    final String Desconhecido = " que não está cadastrado em contatos te mandou uma mensagem.";
+    final String Conhecido =  " te mandou uma mensagem.";
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public static String getContactName(Context context, String phoneNumber) {
@@ -47,16 +45,23 @@ public class InterceptCall extends BroadcastReceiver {
         return contactName;
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onReceive(final Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
 
+        Intent intent1 = new Intent();
+        intent1.setClass(context,TTS.class);
+        context.startActivity(intent1);
+
+/*        TextToSpeech bittar = new TextToSpeech(context, (TextToSpeech.OnInitListener)this);
+        bittar.setLanguage(Locale.CANADA);
+        String msg = "THIS IS A TERRIBLE TEST"; Didnt Work só pra constar. */
 
         if (null == bundle)
             return;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
 
         try {
             //************** RECEBENDO MENSAGEM *************************************
@@ -66,15 +71,19 @@ public class InterceptCall extends BroadcastReceiver {
                     String messageBody = smsMessage.getMessageBody();
                     String phone = smsMessage.getOriginatingAddress();
                     String contactName = getContactName(context, phone);
-
                     Log.v(TAG, messageBody);
                     Log.v(TAG, contactName);
-
-                    if (contactName.equals(null)) {
-                        Toast.makeText(context, contactName + " te mandou uma mensagem.", Toast.LENGTH_LONG).show();
+                    if (contactName != null) {
+                        Toast.makeText(context, contactName + Conhecido, Toast.LENGTH_LONG).show();
+//                        String N1 = "HUEHUEHUEHUE";
+//                        Intent intent1 = new Intent();
+//                        intent1.setClass(context,TTS.class);
+//                        intent1.putExtra("N1", N1 );
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//                        context.startActivity(intent1);
                         //Toast.makeText(context, messageBody, Toast.LENGTH_LONG).show();
                     }else{
-                        Toast.makeText(context, contactName + " te mandou uma mensagem.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, contactName + Desconhecido, Toast.LENGTH_LONG).show();
                         //Toast.makeText(context, messageBody, Toast.LENGTH_LONG).show();
                     }
 
@@ -116,8 +125,11 @@ public class InterceptCall extends BroadcastReceiver {
                     public void onCallStateChanged(int state, String incomingNumber) {
                         super.onCallStateChanged(state, incomingNumber);
                         String contactName = getContactName(context, incomingNumber);
+                        /*for(int a=0;a<1000;a++){
+                            Log.v(TAG, "Delay para pegar o numero");
+                        }*/
                         if (contactName == null) {
-                            Toast.makeText(context, incomingNumber + " Está te ligando.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, contactName + " Está te ligando.", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context, contactName + " Está te ligando.", Toast.LENGTH_SHORT).show();
                         }
