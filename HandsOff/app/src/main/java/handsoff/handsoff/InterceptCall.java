@@ -1,5 +1,6 @@
 package handsoff.handsoff;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
 import android.telephony.PhoneStateListener;
 import android.telephony.SmsMessage;
@@ -46,14 +48,13 @@ public class InterceptCall extends BroadcastReceiver {
     }
 
 
+    @TargetApi(Build.VERSION_CODES.O)
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onReceive(final Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
 
-        Intent intent1 = new Intent();
-        intent1.setClass(context,TTS.class);
-        context.startActivity(intent1);
+
 
 /*        TextToSpeech bittar = new TextToSpeech(context, (TextToSpeech.OnInitListener)this);
         bittar.setLanguage(Locale.CANADA);
@@ -77,13 +78,19 @@ public class InterceptCall extends BroadcastReceiver {
                         Toast.makeText(context, contactName + Conhecido, Toast.LENGTH_LONG).show();
 //                        String N1 = "HUEHUEHUEHUE";
 //                        Intent intent1 = new Intent();
-//                        intent1.setClass(context,TTS.class);
+
 //                        intent1.putExtra("N1", N1 );
-                        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//                        Intent intent1 = new Intent();
+
+
+
 //                        context.startActivity(intent1);
-                        //Toast.makeText(context, messageBody, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, messageBody, Toast.LENGTH_LONG).show();
+                        TTSApp.speak(contactName + "is sending you a message:" + messageBody);
                     }else{
                         Toast.makeText(context, contactName + Desconhecido, Toast.LENGTH_LONG).show();
+                        TTSApp.speak(contactName + "is sending you a message:" + messageBody);
+
                         //Toast.makeText(context, messageBody, Toast.LENGTH_LONG).show();
                     }
 
@@ -130,8 +137,10 @@ public class InterceptCall extends BroadcastReceiver {
                         }*/
                         if (contactName == null) {
                             Toast.makeText(context, contactName + " Está te ligando.", Toast.LENGTH_SHORT).show();
+                            TTSApp.speak(contactName + "is calling you.");
                         } else {
-                            Toast.makeText(context, contactName + " Está te ligando.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, contactName + "Está te ligando.", Toast.LENGTH_SHORT).show();
+                            TTSApp.speak(contactName + "is calling you.");
                         }
                         //System.out.println("incomingNumber : "+incomingNumber);
 
