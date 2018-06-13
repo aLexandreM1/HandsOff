@@ -53,19 +53,12 @@ public class InterceptCall extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-
-
-
-/*        TextToSpeech bittar = new TextToSpeech(context, (TextToSpeech.OnInitListener)this);
-        bittar.setLanguage(Locale.CANADA);
-        String msg = "THIS IS A TERRIBLE TEST"; Didnt Work só pra constar. */
-
         if (null == bundle)
             return;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         try {
-            //************** RECEBENDO MENSAGEM *************************************
+            //*********************** RECEBENDO MENSAGEM ******************************
 
             if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION.equals(intent.getAction())) {
                 for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
@@ -76,22 +69,10 @@ public class InterceptCall extends BroadcastReceiver {
                     Log.v(TAG, contactName);
                     if (contactName != null) {
                         Toast.makeText(context, contactName + Conhecido, Toast.LENGTH_LONG).show();
-//                        String N1 = "HUEHUEHUEHUE";
-//                        Intent intent1 = new Intent();
-
-//                        intent1.putExtra("N1", N1 );
-//                        Intent intent1 = new Intent();
-
-
-
-//                        context.startActivity(intent1);
-//                        Toast.makeText(context, messageBody, Toast.LENGTH_LONG).show();
-                        TTSApp.speak(contactName + "is sending you a message:" + messageBody);
+                        TTSApp.speak(contactName + "te enviou uma mensagem:" + messageBody);
                     }else{
                         Toast.makeText(context, contactName + Desconhecido, Toast.LENGTH_LONG).show();
-                        TTSApp.speak(contactName + "is sending you a message:" + messageBody);
-
-                        //Toast.makeText(context, messageBody, Toast.LENGTH_LONG).show();
+                        TTSApp.speak(contactName + "te enviou uma mensagem:" + messageBody);
                     }
 
                 }
@@ -99,7 +80,8 @@ public class InterceptCall extends BroadcastReceiver {
 
             //************************ //=// ****************************************
 
-            //************** REJEITA A LIGACAO **************************************
+            //********************** REJEITA A LIGACAO ******************************
+
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (tm.getCallState() == TelephonyManager.CALL_STATE_RINGING) {
                 Log.v(TAG, "Get getTeleService...");
@@ -124,7 +106,7 @@ public class InterceptCall extends BroadcastReceiver {
                 android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
                 smsManager.sendTextMessage(smsNumber, null, smsText, null, null);
 
-                //**************Pega numero de quem esta ligando*****************************
+                //***************** Pega numero de quem esta ligando *************************
 
                 tm.listen(new PhoneStateListener() {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -132,21 +114,18 @@ public class InterceptCall extends BroadcastReceiver {
                     public void onCallStateChanged(int state, String incomingNumber) {
                         super.onCallStateChanged(state, incomingNumber);
                         String contactName = getContactName(context, incomingNumber);
-                        /*for(int a=0;a<1000;a++){
-                            Log.v(TAG, "Delay para pegar o numero");
-                        }*/
                         if (contactName == null) {
                             Toast.makeText(context, contactName + " Está te ligando.", Toast.LENGTH_SHORT).show();
-                            TTSApp.speak(contactName + "is calling you.");
+                            TTSApp.speak(contactName + "está te ligando.");
                         } else {
                             Toast.makeText(context, contactName + "Está te ligando.", Toast.LENGTH_SHORT).show();
-                            TTSApp.speak(contactName + "is calling you.");
+                            TTSApp.speak(contactName + "está te ligando.");
                         }
-                        //System.out.println("incomingNumber : "+incomingNumber);
 
                     }
                 }, PhoneStateListener.LISTEN_CALL_STATE);
-                //***************************************************************************
+
+                //**********************************//=//************************************
             }
         } catch (Exception e) {
             e.printStackTrace();
