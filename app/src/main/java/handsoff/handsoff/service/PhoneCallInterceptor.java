@@ -19,7 +19,7 @@ import com.android.internal.telephony.ITelephony;
 import java.lang.reflect.Method;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class CallInterceptor extends BroadcastReceiver {
+public class PhoneCallInterceptor extends BroadcastReceiver {
     private String getContactName(Context context, String phoneNumber) {
         ContentResolver cr = context.getContentResolver();
         Uri uri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Contactables.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
@@ -55,8 +55,8 @@ public class CallInterceptor extends BroadcastReceiver {
             for (int i = 0; i < incomingNumber.length(); i++)
                 auxAppender.append(incomingNumber.charAt(i)).append(" ");
 
-            Toast.makeText(context, "Ligação de " + (contactName != null ? contactName : incomingNumber), Toast.LENGTH_SHORT).show();
-            TTSApp.speak("Ligação de " + (contactName != null ? contactName : auxAppender.toString()));
+            Toast.makeText(context, "Ligação de " + (contactName != null ? contactName : incomingNumber) + " rejeitada.", Toast.LENGTH_SHORT).show();
+            TTSApp.speak("Ligação de " + (contactName != null ? contactName : auxAppender.toString()) + " rejeitada.");
 
             SmsManager smsManager = android.telephony.SmsManager.getDefault();
             smsManager.sendTextMessage(incomingNumber, null, "Estou ocupado. Por gentileza, retorne mais tarde. Grato.", null, null);

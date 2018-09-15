@@ -14,7 +14,7 @@ import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class InterceptSMS extends BroadcastReceiver {
+public class SMSInterceptor extends BroadcastReceiver {
     private String getContactName(Context context, String phoneNumber) {
         ContentResolver cr = context.getContentResolver();
         Uri uri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Contactables.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
@@ -37,15 +37,14 @@ public class InterceptSMS extends BroadcastReceiver {
             String phone = smsMessage.getOriginatingAddress();
             String contactName = getContactName(context, phone);
 
-            TTSApp.speak((contactName != null ? contactName : phone) + " te enviou uma mensagem" + messageBody);
-
             //Separando números com espaços para que o TTS fale os números individualmente
             StringBuilder auxAppender = new StringBuilder();
             for (int i = 0; i < phone.length(); i++)
                 auxAppender.append(phone.charAt(i)).append(" ");
 
             Toast.makeText(context, "Mensagem de " + (contactName != null ? contactName : phone), Toast.LENGTH_SHORT).show();
-            TTSApp.speak("Mensagem de " + (contactName != null ? contactName : auxAppender.toString()) + ". Mensagem:" + messageBody);
+            //TODO: resolver problema de textos com acentuação que estão sendo pulados
+            TTSApp.speak("MENSAGEM DE " + (contactName != null ? contactName : auxAppender.toString()) + ". MENSAGEM." + messageBody.toUpperCase());
         }
     }
 }
