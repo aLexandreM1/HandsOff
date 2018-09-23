@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1015833564307",
+    "firebase_url": "https://handsoff-c7aef.firebaseio.com",
+    "project_id": "handsoff-c7aef",
+    "storage_bucket": "handsoff-c7aef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015833564307:android:9b96399b15c4c3a0",
+        "android_client_info": {
+          "package_name": "handsoff.handsoff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1015833564307-2786gbc04t5po2d71bhrjr92kmd9ea3m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "handsoff.handsoff",
+            "certificate_hash": "23e45b8bdb3917bcfe5b594bb7968e4b8535105d"
+          }
+        },
+        {
+          "client_id": "1015833564307-08j84jlcec3i3ms8214jkqjfbhduniua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA62eOyLWiSEh8vYtPz_twumk09VIRSMlY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1015833564307-08j84jlcec3i3ms8214jkqjfbhduniua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
