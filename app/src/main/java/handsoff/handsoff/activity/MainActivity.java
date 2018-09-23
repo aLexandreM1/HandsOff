@@ -1,59 +1,62 @@
 package handsoff.handsoff.activity;
 
 import android.Manifest;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import handsoff.handsoff.R;
+import handsoff.handsoff.service.PhoneCallInterceptor;
+import handsoff.handsoff.service.SMSInterceptor;
 
-//VER O PORQUE ELE ESTA DANDO QUE UMA PERMISSAO NAO SEI ACEITA!!!!
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class MainActivity extends AppCompatActivity {
 
     String[] PERMISSIONS = {Manifest.permission.MODIFY_PHONE_STATE, Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS};
 
+    PhoneCallInterceptor phoneCallInterceptor;
+    SMSInterceptor smsInterceptor;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        for(String permission : PERMISSIONS){
-            if (ContextCompat.checkSelfPermission(MainActivity.this,
-                    permission) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                        permission)) {
-                    ActivityCompat.requestPermissions(MainActivity.this,
-                            PERMISSIONS, 1);
-                } else {
-                    ActivityCompat.requestPermissions(MainActivity.this,
-                            PERMISSIONS, 1);
-                }
-            }
-        }
+
+        phoneCallInterceptor = new PhoneCallInterceptor();
+        smsInterceptor = new SMSInterceptor();
+
+        List<String> neededPermissions = new ArrayList<>();
+
+        for (String permission : PERMISSIONS)
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
+                neededPermissions.add(permission);
+
+        requestPermissions(neededPermissions.toArray(new String[neededPermissions.size()]), 1);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    for (String permission : PERMISSIONS) {
-                        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                                Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-                            Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(this, "No permission granted!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-
-            }
-        }
-
+    protected void onStart() {
+        super.onStart();
+        IntentFilter phoneCallIntentFilter = new IntentFilter("android.intent.action.PHONE_STATE");
+        IntentFilter smsIntentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+        registerReceiver(phoneCallInterceptor, phoneCallIntentFilter);
+        registerReceiver(smsInterceptor, smsIntentFilter);
     }
-}
 
+    //onPause está sendo chamado imediatamente, removendo os receivers de ligação e SMS
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        unregisterReceiver(phoneCallInterceptor);
+//        unregisterReceiver(smsInterceptor);
+//    }
+}
