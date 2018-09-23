@@ -1,44 +1,45 @@
 <resources>
-<string name="app_name">HandsOff</string>
-<string name="nome_completo">Nome completo</string>
-<string name="email">E-mail</string>
-<string name="senha">Senha</string>
-<string name="cpf">CPF</string>
-<string name="telefone">Telefone – Ex.: (21) 1234–5678</string>
-<string name="celular">Celular – Ex.: (21) 91234–5678</string>
-<string name="cidade">Cidade</string>
-<string name="salvar">SALVAR</string>
-<string name="limpar">LIMPAR</string>
-<string name="visualizar_contatos">VISUALIZAR CONTATOS</string>
-<string name="momento">Momento do cadastro</string>
+    <string name="app_name">HandsOff</string>
+    <string name="nome_completo">Nome completo</string>
+    <string name="email">E-mail</string>
+    <string name="senha">Senha</string>
+    <string name="cpf">CPF</string>
+    <string name="telefone">Telefone – Ex.: (21) 1234–5678</string>
+    <string name="celular">Celular – Ex.: (21) 91234–5678</string>
+    <string name="cidade">Cidade</string>
+    <string name="salvar">SALVAR</string>
+    <string name="limpar">LIMPAR</string>
+    <string name="visualizar_contatos">VISUALIZAR CONTATOS</string>
+    <string name="momento">Momento do cadastro</string>
+    <string name="login">LOGIN</string>
 
-<string-array name="states_array">
-    <item>Rio de Janeiro</item>
-    <item>São Paulo</item>
-    <item>Minas Gerais</item>
-    <item>Bahia</item>
-    <item>Rio Grande do Sul</item>
-    <item>Paraná</item>
-    <item>Pernambuco</item>
-    <item>Ceará</item>
-    <item>Acre</item>
-    <item>Amazonas</item>
-    <item>Roraima</item>
-    <item>Rondônia</item>
-    <item>Amapá</item>
-    <item>Pará</item>
-    <item>Maranhão</item>
-    <item>Espírito Santo</item>
-    <item>Santa Catarina</item>
-    <item>Piauí</item>
-    <item>Paraíba</item>
-    <item>Rio Grande do Norte</item>
-    <item>Alagoas</item>
-    <item>Sergipe</item>
-    <item>Tocantins</item>
-    <item>Goiás</item>
-    <item>Mato Grosso</item>
-    <item>Distrito Federal</item>
-</string-array>
+    <string-array name="states_array">
+        <item>Rio de Janeiro</item>
+        <item>São Paulo</item>
+        <item>Minas Gerais</item>
+        <item>Bahia</item>
+        <item>Rio Grande do Sul</item>
+        <item>Paraná</item>
+        <item>Pernambuco</item>
+        <item>Ceará</item>
+        <item>Acre</item>
+        <item>Amazonas</item>
+        <item>Roraima</item>
+        <item>Rondônia</item>
+        <item>Amapá</item>
+        <item>Pará</item>
+        <item>Maranhão</item>
+        <item>Espírito Santo</item>
+        <item>Santa Catarina</item>
+        <item>Piauí</item>
+        <item>Paraíba</item>
+        <item>Rio Grande do Norte</item>
+        <item>Alagoas</item>
+        <item>Sergipe</item>
+        <item>Tocantins</item>
+        <item>Goiás</item>
+        <item>Mato Grosso</item>
+        <item>Distrito Federal</item>
+    </string-array>
 </resources>
 
