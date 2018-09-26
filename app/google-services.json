@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1015833564307:android:9b96399b15c4c3a0",
         "android_client_info": {
-          "package_name": "handsoff.handsoff"
+          "package_name": "com.android.projeto.handsoff"
         }
       },
       "oauth_client": [
