@@ -11,4 +11,11 @@
         android:layout_height="match_parent"
         android:text="FRAGMENTO STATUS" />
 
+    <Button
+        android:id="@+id/delogar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="DESLOGAR" />
+
 </FrameLayout>
