@@ -12,13 +12,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_handsoff"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_handsoff"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.MainActivity" android:theme="@style/Theme.Design.Light.NoActionBar"/>
+        <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.RegisterActivity" android:theme="@style/Theme.Design.Light.NoActionBar"/>
         <activity android:name=".activity.LoginActivity" android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>

@@ -12,6 +12,7 @@
     <string name="visualizar_contatos">VISUALIZAR CONTATOS</string>
     <string name="momento">Momento do cadastro</string>
     <string name="login">LOGIN</string>
+    <string name="signOut">Sair</string>
 
     <string-array name="states_array">
         <item>Rio de Janeiro</item>

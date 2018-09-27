@@ -2,7 +2,6 @@ package com.android.projeto.handsoff.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -20,7 +19,6 @@ public class LoginActivity extends AppCompatActivity {
     private Usuario usuario = new Usuario();
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
     private boolean flag;
-    private TextInputLayout textInputLayout;
 
 
     @Override
@@ -31,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         //Views
         edtEmailLogin = findViewById(R.id.edtEmailLogin);
         edtPasswordLogin = findViewById(R.id.edtPasswordLogin);
-        textInputLayout = findViewById(R.id.txtInputLayoutPasswordLogin);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             Intent toMainCurrentUser = new Intent(LoginActivity.this, MainActivity.class);
@@ -57,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (edtPasswordLogin.getText().toString().isEmpty()) {
-            textInputLayout.setPasswordVisibilityToggleEnabled(false);
             edtPasswordLogin.setError("A senha não pode ficar em branco.");
             flag = true;
         }

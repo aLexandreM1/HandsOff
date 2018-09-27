@@ -2,7 +2,6 @@ package com.android.projeto.handsoff.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -13,17 +12,21 @@ import android.widget.EditText;
 
 import com.android.projeto.handsoff.DAO.UsuarioDAO;
 import com.android.projeto.handsoff.R;
+import com.android.projeto.handsoff.domain.Status;
 import com.android.projeto.handsoff.domain.Usuario;
 import com.android.projeto.handsoff.util.MaskEditUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText edtNome, edtEmail, edtSenha, edtTelefone, edtCelular, edtCidade;
     private static final String TAG = "LOG REGISTER ACTIVITY: ";
+    private List<Status> statusList = new ArrayList<>();
     private Usuario usuario = new Usuario();
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
     boolean flag = false;
-    private TextInputLayout textInputLayout;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -40,10 +43,6 @@ public class RegisterActivity extends AppCompatActivity {
         edtCelular = findViewById(R.id.edtCellPhone);
         edtCelular.addTextChangedListener(MaskEditUtil.mask(edtCelular, MaskEditUtil.FORMAT_CELLPHONE));
         edtCidade = findViewById(R.id.edtCity);
-        textInputLayout = findViewById(R.id.txtInputLayoutPassword);
-
-        //Manipulação do toggle
-        textInputLayout.setPasswordVisibilityToggleEnabled(true);
 
         //Autocomplete de cidades
         AutoCompleteTextView completeTextView = (AutoCompleteTextView) findViewById(R.id.edtCity);
@@ -51,6 +50,11 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, states);
         completeTextView.setAdapter(arrayAdapter);
 
+        statusList.add(new Status(0, "Driving", "Estou dirigindo no momento!"));
+        statusList.add(new Status(1, "Amante", "Estou com a boca ocupada, depois eu retorno"));
+        statusList.add(new Status(2, "Fazendo trabalho", "No momento estou fazendo um fucking trabalho da faculdade, ligo já já"));
+        statusList.add(new Status(3, "Vendo apresentação", "Ligue mais tarde por favor."));
+        statusList.add(new Status(4, "Comendo na Ragazzo", "Liga depois pq agora to comendo coxinha com a rapaziada"));
     }
 
     //Limpar o formulário
@@ -81,7 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
             flag = true;
         }
         if (edtSenha.getText().toString().isEmpty()) {
-            textInputLayout.setPasswordVisibilityToggleEnabled(false);
             edtSenha.setError("O campo senha não pode ficar em branco.");
             flag = true;
         }
@@ -113,6 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             usuario.setTelefone(edtTelefone.getText().toString());
             usuario.setCelular(edtCelular.getText().toString());
             usuario.setCidade(edtCidade.getText().toString());
+            //usuario.setStatus(statusList);
 
             //Chamando método para criar um novo usuário
             usuarioDAO.onCreateUser(usuario, this);

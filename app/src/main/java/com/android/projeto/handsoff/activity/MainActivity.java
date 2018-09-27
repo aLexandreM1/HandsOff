@@ -1,10 +1,9 @@
 package com.android.projeto.handsoff.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,9 +14,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.projeto.handsoff.DAO.UsuarioDAO;
 import com.android.projeto.handsoff.R;
+import com.android.projeto.handsoff.domain.Usuario;
 import com.android.projeto.handsoff.fragments.SettingFragment;
 import com.android.projeto.handsoff.fragments.StatusFragment;
 import com.android.projeto.handsoff.service.PhoneCallInterceptor;
@@ -26,7 +30,6 @@ import com.android.projeto.handsoff.service.SMSInterceptor;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class MainActivity extends AppCompatActivity {
     String[] PERMISSIONS = {Manifest.permission.MODIFY_PHONE_STATE, Manifest.permission.READ_PHONE_STATE,
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     PhoneCallInterceptor phoneCallInterceptor;
     SMSInterceptor smsInterceptor;
 
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 Toast.makeText(MainActivity.this, "TAB SELECIONADA", Toast.LENGTH_SHORT).show();
 
-                switch (tab.getPosition()){
+                switch (tab.getPosition()) {
                     case 0:
                         replaceFragment(new StatusFragment());
                         break;
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            private void replaceFragment(Fragment fragment){
+            private void replaceFragment(Fragment fragment) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.FrameContainer, fragment);
@@ -97,6 +101,25 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).select();
         tabLayout.getTabAt(0).select();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.signOut:
+                usuarioDAO.onSignOut(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

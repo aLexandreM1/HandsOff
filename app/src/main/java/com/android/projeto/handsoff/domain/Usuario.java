@@ -14,18 +14,28 @@ public class Usuario {
     private String telefone;
     private String celular;
     private String cidade;
+    private Status status;
     private long timestamp;
     private Map<String, String> MapMoment = ServerValue.TIMESTAMP;
 
     public Usuario(){}
 
-    public Usuario(String nome, String email, String senha, String telefone, String celular, String cidade) {
+    public Usuario(String nome, String email, String senha, String telefone, String celular, String cidade, Status status) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.celular = celular;
         this.cidade = cidade;
+        this.status = status;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Map<String, String> getMapMoment(){
