@@ -71,11 +71,11 @@
             android:textColorHint="#ffffff" />
 
         <AutoCompleteTextView
-            android:id="@+id/edtCity"
+            android:id="@+id/edtState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="@string/cidade"
+            android:hint="@string/estado"
             android:inputType="text"
             android:textColor="#ffffff"
             android:textColorHighlight="#536DFE"

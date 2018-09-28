@@ -21,7 +21,7 @@ import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText edtNome, edtEmail, edtSenha, edtTelefone, edtCelular, edtCidade;
+    private EditText edtNome, edtEmail, edtSenha, edtTelefone, edtCelular, edtEstado;
     private static final String TAG = "LOG REGISTER ACTIVITY: ";
     private List<Status> statusList = new ArrayList<>();
     private Usuario usuario = new Usuario();
@@ -42,10 +42,10 @@ public class RegisterActivity extends AppCompatActivity {
         edtTelefone.addTextChangedListener(MaskEditUtil.mask(edtTelefone, MaskEditUtil.FORMAT_PHONE));
         edtCelular = findViewById(R.id.edtCellPhone);
         edtCelular.addTextChangedListener(MaskEditUtil.mask(edtCelular, MaskEditUtil.FORMAT_CELLPHONE));
-        edtCidade = findViewById(R.id.edtCity);
+        edtEstado = findViewById(R.id.edtState);
 
-        //Autocomplete de cidades
-        AutoCompleteTextView completeTextView = (AutoCompleteTextView) findViewById(R.id.edtCity);
+        //Autocomplete de estados
+        AutoCompleteTextView completeTextView = (AutoCompleteTextView) findViewById(R.id.edtState);
         String[] states = getResources().getStringArray(R.array.states_array);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, states);
         completeTextView.setAdapter(arrayAdapter);
@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtEmail.getText().clear();
         edtTelefone.getText().clear();
         edtCelular.getText().clear();
-        edtCidade.getText().clear();
+        edtEstado.getText().clear();
 
         edtNome.requestFocus();
     }
@@ -100,8 +100,8 @@ public class RegisterActivity extends AppCompatActivity {
             edtCelular.setError("O campo celular não pode ficar em branco.");
             flag = true;
         }
-        if (edtCidade.getText().toString().isEmpty()) {
-            edtCidade.setError("O campo cidade não pode ficar em branco");
+        if (edtEstado.getText().toString().isEmpty()) {
+            edtEstado.setError("O campo estados não pode ficar em branco");
             flag = true;
         }
     }
@@ -115,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
             usuario.setEmail(edtEmail.getText().toString());
             usuario.setTelefone(edtTelefone.getText().toString());
             usuario.setCelular(edtCelular.getText().toString());
-            usuario.setCidade(edtCidade.getText().toString());
+            usuario.setEstado(edtEstado.getText().toString());
             usuario.setStatus(statusList);
 
             //Chamando método para criar um novo usuário

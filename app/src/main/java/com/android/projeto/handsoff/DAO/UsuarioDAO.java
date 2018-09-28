@@ -29,7 +29,7 @@ public class UsuarioDAO {
     //private BaseUtils baseUtils = new BaseUtils();
     private String TAG = "LOG USUARIO DAO: ";
 
-    public void onCreateUser(Usuario usuario, final Activity activity) {
+    public void onCreateUser(final Usuario usuario, final Activity activity) {
 
         auth = FirebaseAuth.getInstance();
 
@@ -38,6 +38,23 @@ public class UsuarioDAO {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            try {
+                                //Referencia um filho no database.
+                                reference = FirebaseDatabase.getInstance().getReference().child("usuarios");
+
+                                //Insere no firebase (o push() cria uma chave única, um Id para o registro).
+                                reference.push().setValue(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.v(TAG, "Usuário cadastrado com sucesso");
+                                    }
+                                });
+
+                            } catch (Exception e) {
+                                Log.v(TAG, "ERRO NO DATABASE: " + e);
+                            }
+
                             //baseUtils.showProgressBar(activity);
                             Toast.makeText(activity, "Usuário cadastrado com sucesso", Toast.LENGTH_LONG).show();
                             Intent toLogin = new Intent(activity, LoginActivity.class);
@@ -65,22 +82,6 @@ public class UsuarioDAO {
                         }
                     }
                 });
-
-        try {
-            //Referencia um filho no database.
-            reference = FirebaseDatabase.getInstance().getReference().child("usuarios");
-
-            //Insere no firebase (o push() cria uma chave única, um Id para o registro).
-            reference.push().setValue(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.v(TAG, "Usuário cadastrado com sucesso");
-                }
-            });
-
-        } catch (Exception e) {
-            Log.v(TAG, "ERRO NO DATABASE: " + e);
-        }
 
         //Manter os dados sincronizados com o Firebase Realtime.
         reference = FirebaseDatabase.getInstance().getReference("usuarios");
@@ -111,7 +112,8 @@ public class UsuarioDAO {
 
     }
 
-    public void onCreateStatus(Status status, final Activity activity) {
+    //Create status - se precisar.
+    /*    public void onCreateStatus(Status status, final Activity activity) {
 
         reference = FirebaseDatabase.getInstance().getReference().child("status");
         reference.push().setValue(status).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -130,9 +132,9 @@ public class UsuarioDAO {
 
         reference = FirebaseDatabase.getInstance().getReference("status");
         reference.keepSynced(true);
-    }
+    }*/
 
-    public void onSignOut(Activity activity){
+    public void onSignOut(Activity activity) {
         FirebaseAuth.getInstance().signOut();
         //baseUtils.showProgressBar(activity);
         Intent backToLogin = new Intent(activity, LoginActivity.class);

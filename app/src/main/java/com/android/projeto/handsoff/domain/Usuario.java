@@ -14,20 +14,20 @@ public class Usuario {
     private String senha;
     private String telefone;
     private String celular;
-    private String cidade;
+    private String estado;
     private List<Status> status;
     private long timestamp;
     private Map<String, String> MapMoment = ServerValue.TIMESTAMP;
 
     public Usuario(){}
 
-    public Usuario(String nome, String email, String senha, String telefone, String celular, String cidade, List<Status> status) {
+    public Usuario(String nome, String email, String senha, String telefone, String celular, String estado, List<Status> status) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.celular = celular;
-        this.cidade = cidade;
+        this.estado = estado;
         this.status = status;
     }
 
@@ -94,11 +94,11 @@ public class Usuario {
         this.celular = celular;
     }
 
-    public String getCidade() {
-        return cidade;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

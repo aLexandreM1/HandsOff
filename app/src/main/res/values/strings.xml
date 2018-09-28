@@ -6,7 +6,7 @@
     <string name="cpf">CPF</string>
     <string name="telefone">Telefone – Ex.: (21) 1234–5678</string>
     <string name="celular">Celular – Ex.: (21) 91234–5678</string>
-    <string name="cidade">Cidade</string>
+    <string name="estado">Estado</string>
     <string name="salvar">SALVAR</string>
     <string name="limpar">LIMPAR</string>
     <string name="visualizar_contatos">VISUALIZAR CONTATOS</string>
