@@ -116,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             usuario.setTelefone(edtTelefone.getText().toString());
             usuario.setCelular(edtCelular.getText().toString());
             usuario.setCidade(edtCidade.getText().toString());
-            //usuario.setStatus(statusList);
+            usuario.setStatus(statusList);
 
             //Chamando método para criar um novo usuário
             usuarioDAO.onCreateUser(usuario, this);

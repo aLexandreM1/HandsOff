@@ -4,6 +4,7 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class Usuario {
@@ -14,13 +15,13 @@ public class Usuario {
     private String telefone;
     private String celular;
     private String cidade;
-    private Status status;
+    private List<Status> status;
     private long timestamp;
     private Map<String, String> MapMoment = ServerValue.TIMESTAMP;
 
     public Usuario(){}
 
-    public Usuario(String nome, String email, String senha, String telefone, String celular, String cidade, Status status) {
+    public Usuario(String nome, String email, String senha, String telefone, String celular, String cidade, List<Status> status) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -30,11 +31,11 @@ public class Usuario {
         this.status = status;
     }
 
-    public Status getStatus() {
+    public List<Status> getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(List<Status> status) {
         this.status = status;
     }
 
