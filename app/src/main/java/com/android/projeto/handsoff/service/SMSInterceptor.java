@@ -44,7 +44,7 @@ public class SMSInterceptor extends BroadcastReceiver {
 
             Toast.makeText(context, "Mensagem de " + (contactName != null ? contactName : phone), Toast.LENGTH_SHORT).show();
             //TODO: resolver problema de textos com acentuação que estão sendo pulados
-            TTSApp.speak("MENSAGEM DE " + (contactName != null ? contactName : auxAppender.toString()) + ". MENSAGEM." + messageBody.toUpperCase());
+            TTSApp.speak("MENSAGEM DE " + (contactName != null ? contactName : auxAppender.toString()) + ". Dizendo:" + messageBody.toUpperCase());
         }
     }
 }
