@@ -122,6 +122,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    //onPause está sendo chamado imediatamente, removendo os receivers de ligação e SMS
+/*    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(phoneCallInterceptor);
+        unregisterReceiver(smsInterceptor);
+    }*/
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -130,12 +139,4 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(phoneCallInterceptor, phoneCallIntentFilter);
         registerReceiver(smsInterceptor, smsIntentFilter);
     }
-
-    //onPause está sendo chamado imediatamente, removendo os receivers de ligação e SMS
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        unregisterReceiver(phoneCallInterceptor);
-//        unregisterReceiver(smsInterceptor);
-//    }
 }
