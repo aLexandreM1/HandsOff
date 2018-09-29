@@ -1,4 +1,4 @@
-package com.android.projeto.handsoff;
+package com.android.internal.telephony;
 
   interface ITelephony {
 
