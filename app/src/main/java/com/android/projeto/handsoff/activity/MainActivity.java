@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Toast.makeText(MainActivity.this, "TAB SELECIONADA", Toast.LENGTH_SHORT).show();
-
                 switch (tab.getPosition()) {
                     case 0:
                         replaceFragment(new StatusFragment());

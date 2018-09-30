@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtEstado = findViewById(R.id.edtState);
 
         //Autocomplete de estados
-        AutoCompleteTextView completeTextView = (AutoCompleteTextView) findViewById(R.id.edtState);
+        AutoCompleteTextView completeTextView = findViewById(R.id.edtState);
         String[] states = getResources().getStringArray(R.array.states_array);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, states);
         completeTextView.setAdapter(arrayAdapter);
@@ -111,6 +111,15 @@ public class RegisterActivity extends AppCompatActivity {
             usuario.setCelular(edtCelular.getText().toString());
             usuario.setEstado(edtEstado.getText().toString());
             usuario.setStatus(statusList);
+
+            //Default status
+            /*int statusId = new Status().getId();
+            statusId++;*/
+            statusList.add(new Status(1, "Driving", "Estou dirigindo no momento!"));
+            statusList.add(new Status(2, "Amante", "Estou com a boca ocupada, depois eu retorno"));
+            statusList.add(new Status(3, "Fazendo trabalho", "No momento estou fazendo um fucking trabalho da faculdade, ligo já já"));
+            statusList.add(new Status(4, "Vendo apresentação", "Ligue mais tarde por favor."));
+            statusList.add(new Status(5, "Comendo na Ragazzo", "Liga depois pq agora to comendo coxinha com a rapaziada"));
 
             //Chamando método para criar um novo usuário
             usuarioDAO.onCreateUser(usuario, this);

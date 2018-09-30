@@ -1,56 +1,51 @@
 package com.android.projeto.handsoff.domain;
 
 import com.google.firebase.database.Exclude;
-import com.google.firebase.database.ServerValue;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class Usuario {
 
+    private int userId;
     private String name;
     private String email;
     private String senha;
     private String telefone;
     private String celular;
     private String estado;
-    private List<Status> status;
-    private long timestamp;
-    private Map<String, String> MapMoment = ServerValue.TIMESTAMP;
+    /*private long timestamp;
+    private Map<String, String> MapMoment = ServerValue.TIMESTAMP;*/
 
-    public Usuario(){}
+    public Usuario() {
+    }
 
-    public Usuario(String name, String email, String senha, String telefone, String celular, String estado, List<Status> status) {
+    public Usuario(String name, String email, String senha, String telefone, String celular, String estado) {
         this.name = name;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.celular = celular;
         this.estado = estado;
-        this.status = status;
     }
 
-    public List<Status> getStatus() {
-        return status;
-    }
+    /*    public List<Status> getStatus() {
+            return status;
+        }
 
-    public void setStatus(List<Status> status) {
-        this.status = status;
-    }
+        public void setStatus(List<Status> status) {
+            this.status = status;
+        }
 
-    public Map<String, String> getMapMoment(){
-        return MapMoment;
-    }
+        public Map<String, String> getMapMoment() {
+            return MapMoment;
+        }
 
-    public void setMapMoment(long Moment){
-        timestamp = Moment;
-    }
+        public void setMapMoment(long Moment) {
+            timestamp = Moment;
+        }
 
-    @Exclude
-    public Date getMoment(){
-        return new Date(timestamp);
-    }
+        @Exclude
+        public Date getMoment() {
+            return new Date(timestamp);
+        }*/
 
     public String getName() {
         return name;

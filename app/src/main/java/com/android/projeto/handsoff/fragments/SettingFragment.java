@@ -12,63 +12,52 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.projeto.handsoff.DAO.UsuarioDAO;
 import com.android.projeto.handsoff.R;
-import com.android.projeto.handsoff.domain.Status;
 
 
 public class SettingFragment extends Fragment {
 
-    //private UsuarioDAO usuarioDAO = new UsuarioDAO();
-    //private Status status = new Status();
-    private Button btnAddStatus, btnSalvar, btnCancelar;
+    private Button btnSalvar;
+    private Button btnCancelar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false);
+        View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        //NO RECYCLERVIEW QUANDO CLICA EM UM STATUS O USUÁRIO PODE ALTERAR OU DELETAR...
-        //PRA ISSO TEM QUE TER UM DIALOG COM 3 EDITTEXT E 2 BUTTONS, PARA ATUALIZAR E DELETAR
+        //TODO:NO RECYCLERVIEW QUANDO CLICA EM UM STATUS O USUÁRIO PODE ALTERAR OU DELETAR..
 
+        view.findViewById(R.id.btnAddStatus).setOnClickListener(this::setBtnAddStatus);
+
+        return view;
     }
 
     public void setBtnAddStatus(View view) {
-        btnAddStatus = view.findViewById(R.id.btnAddStatus);
+        Button btnAddStatus = view.findViewById(R.id.btnAddStatus);
 
-        btnAddStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LayoutInflater inflater = LayoutInflater.from(view.getContext());
-                final View v = inflater.inflate(R.layout.alert_dialog_new_status, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setView(v);
+        btnAddStatus.setOnClickListener(addNewStatus -> {
+            LayoutInflater inflater = LayoutInflater.from(addNewStatus.getContext());
+            final View v = inflater.inflate(R.layout.alert_dialog_new_status, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(addNewStatus.getContext());
+            builder.setView(v);
 
-                btnSalvar = v.findViewById(R.id.saveNewUser);
-                btnCancelar = v.findViewById(R.id.cancelNewStatus);
+            btnSalvar = v.findViewById(R.id.saveNewUser);
+            btnCancelar = v.findViewById(R.id.cancelNewStatus);
 
-                builder.setCancelable(true);
-                final AlertDialog alertDialog = builder.create();
-                alertDialog.getWindow().setGravity(Gravity.CENTER);
-                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                alertDialog.show();
+            builder.setCancelable(true);
+            final AlertDialog alertDialog = builder.create();
+            alertDialog.getWindow().setGravity(Gravity.CENTER);
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            alertDialog.show();
 
-                btnSalvar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //PEDIR AJUDA PRO DIEGO AMANHÃ
-                        //usuarioDAO.onCreateStatus(status, getActivity());
-                    }
-                });
+            btnSalvar.setOnClickListener(btnSaveNewStatus -> {
+                //usuarioDAO.onCreateStatus(status, getActivity());
+            });
 
-                btnCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alertDialog.cancel();
-                        Toast.makeText(view.getContext(), "Cancelado!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+            btnCancelar.setOnClickListener(btnCancel -> {
+                alertDialog.cancel();
+                Toast.makeText(btnCancel.getContext(), "Cancelado!", Toast.LENGTH_SHORT).show();
+            });
         });
     }
 }

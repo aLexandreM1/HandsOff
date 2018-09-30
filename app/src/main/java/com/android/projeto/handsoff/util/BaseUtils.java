@@ -1,7 +1,19 @@
 package com.android.projeto.handsoff.util;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.android.projeto.handsoff.R;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class BaseUtils {
 

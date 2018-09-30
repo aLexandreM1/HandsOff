@@ -1,12 +1,9 @@
 package com.android.projeto.handsoff.domain;
 
-import java.io.Serializable;
-
-public class Status implements Serializable {
+public class Status {
 
     private int id;
     private String title;
-    //private int time;
     private String description;
 
     public Status(int id, String title, String description) {
@@ -15,7 +12,8 @@ public class Status implements Serializable {
         this.description = description;
     }
 
-    public Status() {}
+    public Status() {
+    }
 
     public int getId() {
         return id;
@@ -32,14 +30,6 @@ public class Status implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    /*public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }*/
 
     public String getDescription() {
         return description;

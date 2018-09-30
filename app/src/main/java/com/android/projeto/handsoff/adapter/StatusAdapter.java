@@ -1,11 +1,7 @@
 package com.android.projeto.handsoff.adapter;
 
-import android.app.AlertDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +9,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.projeto.handsoff.R;
-import com.android.projeto.handsoff.domain.Status;
+import com.android.projeto.handsoff.domain.Usuario;
 
 import java.util.List;
 
 public class StatusAdapter extends RecyclerView.Adapter {
 
-    private List<Status> statusList;
+    //private List<Status> statusList;
+    private List<Usuario> usuarioList;
 
-    public StatusAdapter(List<Status> statusList) {
-        this.statusList = statusList;
+    public StatusAdapter(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @NonNull
@@ -35,16 +32,16 @@ public class StatusAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Status status = statusList.get(position);
+        Usuario usuario = usuarioList.get(position);
 
         StatusViewHolder svh = (StatusViewHolder) holder;
-        svh.textTitle.setText(status.getTitle());
-        svh.textStatus.setText(status.getDescription());
+        svh.textTitle.setText(usuario.getName());
+        svh.textStatus.setText(usuario.getEmail());
     }
 
     @Override
     public int getItemCount() {
-        return statusList.size();
+        return usuarioList.size();
     }
 
     public class StatusViewHolder extends RecyclerView.ViewHolder {
@@ -59,41 +56,32 @@ public class StatusAdapter extends RecyclerView.Adapter {
             textTitle = itemView.findViewById(R.id.textTitle);
             textStatus = itemView.findViewById(R.id.textStatus);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    //Pegar a posição.
-                    LayoutInflater inflater = LayoutInflater.from(view.getContext());
-                    final View v = inflater.inflate(R.layout.alert_dialog_update_delete_status, null);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setView(v);
+            /*itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                //Pegar a posição.
+                LayoutInflater inflater = LayoutInflater.from(view.getContext());
+                final View v = inflater.inflate(R.layout.alert_dialog_update_delete_status, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setView(v);
 
-                    updateStatus = v.findViewById(R.id.updateStatus);
-                    deleteStatus = v.findViewById(R.id.deleteStatus);
+                updateStatus = v.findViewById(R.id.updateStatus);
+                deleteStatus = v.findViewById(R.id.deleteStatus);
 
-                    builder.setCancelable(true);
-                    final AlertDialog alertDialog = builder.create();
-                    alertDialog.getWindow().setGravity(Gravity.CENTER);
-                    alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    alertDialog.show();
+                builder.setCancelable(true);
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.getWindow().setGravity(Gravity.CENTER);
+                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                alertDialog.show();
 
-                    updateStatus.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            //PEDIR AJUDA PRO DIEGO AMANHÃ
-                            //usuarioDAO.onCreateStatus(status, getActivity());
-                        }
-                    });
+                updateStatus.setOnClickListener(view1 -> {
+                    //PEDIR AJUDA PRO DIEGO AMANHÃ
+                    //usuarioDAO.onCreateStatus(status, getActivity());
+                });
 
-                    deleteStatus.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            //DELETAR O STATUS
-                        }
-                    });
-                }
-            });
+                deleteStatus.setOnClickListener(view12 -> {
+                    //DELETAR O STATUS
+                });
+            });*/
         }
     }
 }

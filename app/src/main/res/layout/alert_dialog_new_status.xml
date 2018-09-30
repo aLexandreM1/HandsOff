@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFF"
+    android:layout_height="wrap_content"
+    android:background="#3E80B4"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADICIONAR UM NOVO STATUS"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Título" />
+        android:hint="Título"
+        android:textColor="#000"/>
 
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descrição" />
+        android:hint="Descrição"
+        android:textColor="#000"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="32dp">
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp">
 
         <Button
             android:id="@+id/cancelNewStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginTop="20dp"
-            android:layout_margin="30dp"
+            android:layout_marginRight="32dp"
             android:text="Cancelar" />
 
         <Button
