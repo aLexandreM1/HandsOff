@@ -21,7 +21,7 @@ import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText edtNome, edtEmail, edtSenha, edtTelefone, edtCelular, edtEstado;
+    private EditText edtName, edtEmail, edtSenha, edtTelefone, edtCelular, edtEstado;
     private static final String TAG = "LOG REGISTER ACTIVITY: ";
     private List<Status> statusList = new ArrayList<>();
     private Usuario usuario = new Usuario();
@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         //Views
-        edtNome = findViewById(R.id.edtName);
+        edtName = findViewById(R.id.edtName);
         edtSenha = findViewById(R.id.edtPassword);
         edtEmail = findViewById(R.id.edtEmail);
         edtTelefone = findViewById(R.id.edtPhone);
@@ -49,24 +49,18 @@ public class RegisterActivity extends AppCompatActivity {
         String[] states = getResources().getStringArray(R.array.states_array);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, states);
         completeTextView.setAdapter(arrayAdapter);
-
-        statusList.add(new Status(0, "Driving", "Estou dirigindo no momento!"));
-        statusList.add(new Status(1, "Amante", "Estou com a boca ocupada, depois eu retorno"));
-        statusList.add(new Status(2, "Fazendo trabalho", "No momento estou fazendo um fucking trabalho da faculdade, ligo já já"));
-        statusList.add(new Status(3, "Vendo apresentação", "Ligue mais tarde por favor."));
-        statusList.add(new Status(4, "Comendo na Ragazzo", "Liga depois pq agora to comendo coxinha com a rapaziada"));
     }
 
     //Limpar o formulário
     public void clearForm(View view) {
-        edtNome.getText().clear();
+        edtName.getText().clear();
         edtSenha.getText().clear();
         edtEmail.getText().clear();
         edtTelefone.getText().clear();
         edtCelular.getText().clear();
         edtEstado.getText().clear();
 
-        edtNome.requestFocus();
+        edtName.requestFocus();
     }
 
     //Validação exclusiva para e-mail
@@ -80,8 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         flag = false;
 
-        if (edtNome.getText().toString().isEmpty()) {
-            edtNome.setError("O campo nome não pode ficar em branco.");
+        if (edtName.getText().toString().isEmpty()) {
+            edtName.setError("O campo nome não pode ficar em branco.");
             flag = true;
         }
         if (edtSenha.getText().toString().isEmpty()) {
@@ -110,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void saveUser(View view) {
         validateForm();
         if (!flag) {
-            usuario.setNome(edtNome.getText().toString());
+            usuario.setName(edtName.getText().toString());
             usuario.setSenha(edtSenha.getText().toString());
             usuario.setEmail(edtEmail.getText().toString());
             usuario.setTelefone(edtTelefone.getText().toString());
@@ -122,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             usuarioDAO.onCreateUser(usuario, this);
 
             clearForm(view);
-            edtNome.requestFocus();
+            edtName.requestFocus();
         }
     }
 }

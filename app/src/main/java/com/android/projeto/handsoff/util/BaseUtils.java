@@ -1,27 +1,20 @@
 package com.android.projeto.handsoff.util;
 
 import android.app.Activity;
-import android.content.Context;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ProgressBar;
-
-import com.android.projeto.handsoff.R;
+import android.app.ProgressDialog;
 
 public class BaseUtils {
 
-    private ProgressBar progressBar;
-
-    public void showProgressBar(Activity activity) {
-        progressBar = activity.findViewById(R.id.progressbar);
-        progressBar.setVisibility(View.VISIBLE);
+    public void showProgressDialog(Activity activity) {
+        ProgressDialog dialog;
+        dialog = new ProgressDialog(activity);
+        dialog = ProgressDialog.show(activity, "Carregando...", "Carregando, por favor aguarde...", false, false);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
     }
 
-    public void hideProgressBar(Activity activity) {
-        progressBar.setVisibility(View.GONE);
-    }
-
-    //VERIFICAR AMANHÃ
+    //VERIFICAR
     /*public void hideKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
         if (view != null) {

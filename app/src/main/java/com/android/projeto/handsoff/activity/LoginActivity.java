@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText edtEmailLogin, edtPasswordLogin;
-    private Usuario usuario = new Usuario();
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
     private boolean flag;
 
@@ -35,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(toMainCurrentUser);
             finish();
         }
-
     }
 
     //Validação exclusiva para e-mail

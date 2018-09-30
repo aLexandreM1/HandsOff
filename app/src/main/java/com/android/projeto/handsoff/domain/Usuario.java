@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Usuario {
 
-    private String nome;
+    private String name;
     private String email;
     private String senha;
     private String telefone;
@@ -21,8 +21,8 @@ public class Usuario {
 
     public Usuario(){}
 
-    public Usuario(String nome, String email, String senha, String telefone, String celular, String estado, List<Status> status) {
-        this.nome = nome;
+    public Usuario(String name, String email, String senha, String telefone, String celular, String estado, List<Status> status) {
+        this.name = name;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
@@ -52,12 +52,12 @@ public class Usuario {
         return new Date(timestamp);
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

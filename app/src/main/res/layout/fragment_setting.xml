@@ -22,7 +22,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:onClick="addNewStatus"
                 android:text="Adicionar novo status" />
 
             <TextView
@@ -36,8 +35,8 @@
                 android:text="Toque em um status para atualizar ou deletar"
                 android:textAlignment="center" />
 
-            <ListView
-                android:id="@+id/listViewArtists"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewConfig"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView1" />
