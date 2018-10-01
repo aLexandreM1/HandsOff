@@ -4,26 +4,27 @@ import com.google.firebase.database.Exclude;
 
 public class Usuario {
 
-    private int userId;
     private String name;
     private String email;
     private String senha;
     private String telefone;
     private String celular;
     private String estado;
+    private String status;
     /*private long timestamp;
     private Map<String, String> MapMoment = ServerValue.TIMESTAMP;*/
 
     public Usuario() {
     }
 
-    public Usuario(String name, String email, String senha, String telefone, String celular, String estado) {
+    public Usuario(String name, String email, String senha, String telefone, String celular, String estado, String status) {
         this.name = name;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.celular = celular;
         this.estado = estado;
+        this.status = status;
     }
 
     /*    public List<Status> getStatus() {
@@ -46,6 +47,14 @@ public class Usuario {
         public Date getMoment() {
             return new Date(timestamp);
         }*/
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getName() {
         return name;

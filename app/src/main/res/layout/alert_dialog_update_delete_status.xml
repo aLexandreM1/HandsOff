@@ -2,30 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="16dp"
     android:background="#3E80B4"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_margin="16dp">
+    android:padding="16dp">
 
-    <EditText
-        android:id="@+id/edtTitle"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Título" />
-
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="ADICIONAR UM NOVO STATUS"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/edtDescription"
+        android:id="@+id/edtStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descrição" />
+        android:hint="Status" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="24dp"
+        android:gravity="center">
 
         <Button
             android:id="@+id/deleteStatus"

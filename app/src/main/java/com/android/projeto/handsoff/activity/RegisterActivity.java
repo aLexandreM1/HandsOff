@@ -12,7 +12,6 @@ import android.widget.EditText;
 
 import com.android.projeto.handsoff.DAO.UsuarioDAO;
 import com.android.projeto.handsoff.R;
-import com.android.projeto.handsoff.domain.Status;
 import com.android.projeto.handsoff.domain.Usuario;
 import com.android.projeto.handsoff.util.MaskEditUtil;
 
@@ -23,7 +22,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText edtName, edtEmail, edtSenha, edtTelefone, edtCelular, edtEstado;
     private static final String TAG = "LOG REGISTER ACTIVITY: ";
-    private List<Status> statusList = new ArrayList<>();
     private Usuario usuario = new Usuario();
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
     boolean flag = false;
@@ -110,16 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
             usuario.setTelefone(edtTelefone.getText().toString());
             usuario.setCelular(edtCelular.getText().toString());
             usuario.setEstado(edtEstado.getText().toString());
-            usuario.setStatus(statusList);
-
-            //Default status
-            /*int statusId = new Status().getId();
-            statusId++;*/
-            statusList.add(new Status(1, "Driving", "Estou dirigindo no momento!"));
-            statusList.add(new Status(2, "Amante", "Estou com a boca ocupada, depois eu retorno"));
-            statusList.add(new Status(3, "Fazendo trabalho", "No momento estou fazendo um fucking trabalho da faculdade, ligo já já"));
-            statusList.add(new Status(4, "Vendo apresentação", "Ligue mais tarde por favor."));
-            statusList.add(new Status(5, "Comendo na Ragazzo", "Liga depois pq agora to comendo coxinha com a rapaziada"));
+            usuario.setStatus("Estou ocupado no momento.");
 
             //Chamando método para criar um novo usuário
             usuarioDAO.onCreateUser(usuario, this);

@@ -3,44 +3,32 @@ package com.android.projeto.handsoff.DAO;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.projeto.handsoff.R;
 import com.android.projeto.handsoff.activity.LoginActivity;
-import com.android.projeto.handsoff.activity.MainActivity;
-import com.android.projeto.handsoff.adapter.StatusAdapter;
-import com.android.projeto.handsoff.domain.Status;
 import com.android.projeto.handsoff.domain.Usuario;
 import com.android.projeto.handsoff.fragments.StatusFragment;
 import com.android.projeto.handsoff.util.BaseUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.database.ValueEventListener;
 
 public class UsuarioDAO {
 
     private DatabaseReference reference;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
-    private RecyclerView recyclerView;
+    private FirebaseUser firebaseUser;
+    private FirebaseDatabase firebaseDatabase;
     private BaseUtils baseUtils = new BaseUtils();
+    private String userId;
     private String TAG = "LOG USUARIO DAO: ";
 
     public void onCreateUser(final Usuario usuario, final Activity activity) {
@@ -115,5 +103,27 @@ public class UsuarioDAO {
         Intent backToLogin = new Intent(activity, LoginActivity.class);
         activity.startActivity(backToLogin);
         activity.finish();
+    }
+
+    public void getUserStatus(EditText text){
+         firebaseDatabase = FirebaseDatabase.getInstance();
+         reference = firebaseDatabase.getReference();
+         firebaseUser = auth.getCurrentUser();
+         userId = firebaseUser.getUid();
+
+         reference.addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 Usuario usuario = new Usuario();
+                 usuario.setStatus(dataSnapshot.child(userId).getValue(Usuario.class).getStatus());
+                 Log.d(TAG, "SHOW DATA: STATUS: " + usuario.getStatus());
+                 text.setText(usuario.getStatus());
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+             }
+         });
     }
 }

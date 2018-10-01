@@ -27,21 +27,21 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/txtStatusAtualStatusFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/emailUser"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:textSize="16sp"
-                android:text="Toque em um status para selecioná-lo"
+                android:text="Status Atual"
                 android:textAlignment="center" />
 
-            <android.support.v7.widget.RecyclerView
+            <!--<android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView1" />
+                android:layout_below="@+id/textView1" />-->
 
         </RelativeLayout>
     </ScrollView>
