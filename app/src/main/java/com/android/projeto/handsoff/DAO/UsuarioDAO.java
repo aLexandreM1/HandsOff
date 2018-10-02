@@ -3,11 +3,13 @@ package com.android.projeto.handsoff.DAO;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.projeto.handsoff.activity.LoginActivity;
+import com.android.projeto.handsoff.activity.MainActivity;
 import com.android.projeto.handsoff.domain.Usuario;
 import com.android.projeto.handsoff.fragments.StatusFragment;
 import com.android.projeto.handsoff.util.BaseUtils;
@@ -15,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +32,7 @@ public class UsuarioDAO {
     private FirebaseDatabase firebaseDatabase;
     private BaseUtils baseUtils = new BaseUtils();
     private String userId;
+    private Usuario usuario = new Usuario();
     private String TAG = "LOG USUARIO DAO: ";
 
     public void onCreateUser(final Usuario usuario, final Activity activity) {
@@ -40,6 +44,8 @@ public class UsuarioDAO {
                         try {
                             //Referencia um filho no database.
                             reference = FirebaseDatabase.getInstance().getReference().child("usuarios");
+
+                            usuario.setUserId(auth.getUid());
 
                             //Insere no firebase (o push() cria uma chave única, um Id para o registro).
                             reference.push().setValue(usuario).addOnSuccessListener(aVoid ->
@@ -87,8 +93,8 @@ public class UsuarioDAO {
                     if (task.isSuccessful()) {
                         baseUtils.showProgressDialog(activity);
                         Log.i(TAG, "Usuário logado com sucesso");
-                        Intent toFragment = new Intent(activity, StatusFragment.class);
-                        activity.startActivity(toFragment);
+                        Intent toMain = new Intent(activity, MainActivity.class);
+                        activity.startActivity(toMain);
                         activity.finish();
                     } else {
                         Toast.makeText(activity, "Falha no login, tente novamente.", Toast.LENGTH_SHORT).show();
@@ -106,18 +112,32 @@ public class UsuarioDAO {
     }
 
     public void getUserStatus(EditText text){
-         firebaseDatabase = FirebaseDatabase.getInstance();
-         reference = firebaseDatabase.getReference();
-         firebaseUser = auth.getCurrentUser();
-         userId = firebaseUser.getUid();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        reference = firebaseDatabase.getReference("usuarios");
+        firebaseUser = auth.getCurrentUser();
+        userId = firebaseUser.getUid();
+        //reference.
+    }
 
-         reference.addValueEventListener(new ValueEventListener() {
+    /*public void getUserStatus(EditText text){
+         firebaseDatabase = FirebaseDatabase.getInstance();
+         reference = firebaseDatabase.getReference("usuarios");
+         firebaseUser = auth.getCurrentUser();
+         String userId = firebaseUser != null ? firebaseUser.getUid() : null;
+
+         Log.d(TAG, userId);
+
+        reference.addValueEventListener(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                 Usuario usuario = new Usuario();
-                 usuario.setStatus(dataSnapshot.child(userId).getValue(Usuario.class).getStatus());
-                 Log.d(TAG, "SHOW DATA: STATUS: " + usuario.getStatus());
-                 text.setText(usuario.getStatus());
+                Usuario usuario = dataSnapshot.child(userId).getValue(Usuario.class);
+                Log.d("*********************", usuario.getName());
+                //                String statusUser = usuario.getStatus();
+//
+//                text.setText(statusUser);
+
+
+
              }
 
              @Override
@@ -125,5 +145,5 @@ public class UsuarioDAO {
 
              }
          });
-    }
+    }*/
 }

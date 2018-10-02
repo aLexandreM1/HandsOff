@@ -16,12 +16,16 @@ import android.widget.Toast;
 import com.android.projeto.handsoff.DAO.UsuarioDAO;
 import com.android.projeto.handsoff.R;
 import com.android.projeto.handsoff.domain.Usuario;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class SettingFragment extends Fragment {
 
     private Button btnAtualizar, btnDeletar;
     private EditText edtStatus;
+    private FirebaseUser firebaseUser;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     @Override
@@ -53,11 +57,9 @@ public class SettingFragment extends Fragment {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             alertDialog.show();
 
-            Usuario usuario = new Usuario();
+            //Usuario usuario = new Usuario();
 
-            edtStatus.setText(usuario.getStatus());
-
-            //usuarioDAO.getUserStatus(edtStatus);
+            usuarioDAO.getUserStatus(edtStatus);
 
             btnAtualizar.setOnClickListener(btnSaveNewStatus -> {
                 //Metodo para atualizar o status
