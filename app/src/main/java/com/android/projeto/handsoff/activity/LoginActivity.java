@@ -12,7 +12,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.android.projeto.handsoff.DAO.UsuarioDAO;
 import com.android.projeto.handsoff.R;
@@ -28,8 +28,11 @@ public class LoginActivity extends AppCompatActivity {
             Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS};
 
     private EditText edtEmailLogin, edtPasswordLogin;
+    private ImageView imageLogo;
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
     private boolean flag;
+    private List<String> neededPermissions = new ArrayList<>();
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -40,25 +43,26 @@ public class LoginActivity extends AppCompatActivity {
         //Views
         edtEmailLogin = findViewById(R.id.edtEmailLogin);
         edtPasswordLogin = findViewById(R.id.edtPasswordLogin);
+        imageLogo = findViewById(R.id.imageLogo);
 
-        //Verifica se tem algum usuário logado no momento
+        //OnClick no logo
+        imageLogo.setOnLongClickListener(view -> {
+            Intent toEasteregg = new Intent(this, EastereggActivity.class);
+            startActivity(toEasteregg);
+            return true;
+        });
+
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             Intent toMainCurrentUser = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(toMainCurrentUser);
             finish();
         }
 
-        //Lista de permissões
-        List<String> neededPermissions = new ArrayList<>();
-
-        //Iteração das permissões - verificando se está concedido ou não.
-        for (String permission : PERMISSIONS){
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
+        for (String permission : PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 neededPermissions.add(permission);
-                Toast.makeText(this, "É necessário que todas as permissões sejam concedidas para o bom funcionamento do app.", Toast.LENGTH_SHORT).show();
             }
         }
-
         //Requerindo permissão
         requestPermissions(neededPermissions.toArray(new String[neededPermissions.size()]), 1);
     }

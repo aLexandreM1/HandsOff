@@ -15,7 +15,7 @@ import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 
-import com.android.projeto.handsoff.ITelephony;
+import com.android.internal.telephony.ITelephony;
 
 import java.lang.reflect.Method;
 
