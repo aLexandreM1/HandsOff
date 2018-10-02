@@ -1,9 +1,6 @@
 package com.android.projeto.handsoff.activity;
 
-import android.Manifest;
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,28 +9,20 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.android.projeto.handsoff.DAO.UsuarioDAO;
 import com.android.projeto.handsoff.R;
-import com.android.projeto.handsoff.domain.Usuario;
 import com.android.projeto.handsoff.fragments.SettingFragment;
 import com.android.projeto.handsoff.fragments.StatusFragment;
 import com.android.projeto.handsoff.service.PhoneCallInterceptor;
 import com.android.projeto.handsoff.service.SMSInterceptor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class MainActivity extends AppCompatActivity {
-    String[] PERMISSIONS = {Manifest.permission.MODIFY_PHONE_STATE, Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS};
     PhoneCallInterceptor phoneCallInterceptor;
     SMSInterceptor smsInterceptor;
 
@@ -47,14 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         phoneCallInterceptor = new PhoneCallInterceptor();
         smsInterceptor = new SMSInterceptor();
-
-        List<String> neededPermissions = new ArrayList<>();
-
-        for (String permission : PERMISSIONS)
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
-                neededPermissions.add(permission);
-
-        requestPermissions(neededPermissions.toArray(new String[neededPermissions.size()]), 1);
 
         /*=========================================================================================*/
 
@@ -130,10 +111,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //onPause está sendo chamado imediatamente, removendo os receivers de ligação e SMS
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        unregisterReceiver(phoneCallInterceptor);
-//        unregisterReceiver(smsInterceptor);
-//    }
+/*    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(phoneCallInterceptor);
+        unregisterReceiver(smsInterceptor);
+    }*/
 }
