@@ -73,7 +73,7 @@ public class UsuarioDAO {
                             erroExecucao = "Esse e-mail já está cadastrado!";
                             Log.v(TAG, e.toString());
                         } catch (Exception e) {
-                            erroExecucao = "Erro ao caddastrar um novo usuário";
+                            erroExecucao = "Erro ao cadastrar um novo usuário";
                             Log.v(TAG, e.toString());
                         }
 
