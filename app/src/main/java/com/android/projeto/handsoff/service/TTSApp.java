@@ -27,8 +27,9 @@ public class TTSApp extends Application implements TextToSpeech.OnInitListener {
             Locale localeBR = new Locale("pt", "br");
             int result = bittar.setLanguage(localeBR);
 
-            if (result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED)
-                bittar.speak("Serviço iniciado com sucesso.", TextToSpeech.QUEUE_FLUSH, null);
+            if (result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED){
+                //bittar.speak("Serviço iniciado com sucesso.", TextToSpeech.QUEUE_FLUSH, null);
+            }
         }
     }
 
